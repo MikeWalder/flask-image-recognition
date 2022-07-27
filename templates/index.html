@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A simple machine learning example</title>
+</head>
+<body>
+    <v-app id="main">
+        <v-app-bar app color="blue" dark flat elevation="12">
+            <v-icon
+            large
+            color="white mx-12"
+            transition="scale-transition"
+            >
+                mdi-brain
+            </v-icon>
+            
+            <v-toolbar-title class="text-center">
+                Classificateur d'images
+            </v-toolbar-title>
+        </v-app-bar>
+
+        <v-main class="grey lighten-2">
+            <v-container>
+                <v-row class="mt-12">
+                  <v-col
+                    cols="1"
+                    sm="2"
+                  > 
+                  </v-col>
+
+                  <v-col
+                    cols="10"
+                    sm="8"
+                    color="primary"
+                  >
+                    <v-card
+                      class="pa-2"
+                      outlined
+                      tile
+                    >
+                    <v-card-title>Select an image</v-card-title>
+                    
+                    <template>
+                      <v-form
+                        method="post" action="/"
+                        enctype="multipart/form-data"
+                        ref="form"
+                        v-model="valid"
+                        lazy-validation
+                      >
+                        <v-file-input
+                          accept="image/*"
+                          label="Select an image"
+                          truncate-length="15"
+                          prepend-icon="mdi-camera"
+                          required
+                          name="imagefile"
+                          id="fileInput"
+                          @change="renderImage()"
+                        ></v-file-input>
+
+                        <v-btn
+                          :disabled="!valid"
+                          color="success"
+                          class="mr-4"
+                          type="submit"
+                          @click="validateImage"
+                        >
+                          Validate
+                        </v-btn>
+
+                        <v-btn
+                          color="error"
+                          class="mr-4"
+                          @click="resetImg"
+                        >
+                          Reset Form
+                        </v-btn>
+
+                      </v-form>
+                    </template>
+                    {{ element }}
+                    <v-img
+                      max-height="150"
+                      max-width="250"
+                      id="output"
+                    ></v-img>
+                    </v-card>
+                  </v-col>
+                </v-row>
+            </v-container>
+
+            {% if prediction %}
+                <p class="text-center">Image is a {{ prediction }}</p>
+            {% endif %}
+        </v-main>
+    </v-app>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+      new Vue({
+        el: '#main',
+        drawer: null,
+        element: "A simple element here",
+        vuetify: new Vuetify(),
+        data: {
+            valid: true,
+            imagePath: '',
+            files: '',
+            src: '',
+        },
+        methods: {
+            validateImage() {
+                console.log('Image uploaded !!')
+                this.valid == false
+                console.log(this.valid)
+            },
+            resetImg() {
+                console.log('Image resetted !')
+                this.$refs.form.reset()
+            },
+            renderImage(files) {
+                document.getElementById('output').src = 'oh'
+            },
+        }
+      })
+    </script>
+
+</body>
+</html>
